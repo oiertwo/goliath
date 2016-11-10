@@ -1,0 +1,153 @@
+
+
+'''
+  631  cd ..
+  632  ls
+  633  rm -rf stamped/
+  634  ls
+  635  workon bio
+  636  pip install cutadapt
+  637  zact Rivaanti155_L005_R1.fastq.gz | cutadapt -a TGGAATTCTCGGGTGCCAAGG out.fastq
+  638  zcat Rivaanti155_L005_R1.fastq.gz | cutadapt -a TGGAATTCTCGGGTGCCAAGG out.fastq
+  639  zcat Rivaanti155_L005_R1.fastq.gz | cutadapt -a TGGAATTCTCGGGTGCCAAGG
+  640  zcat Rivaanti155_L005_R1.fastq.gz | cutadapt -a TGGAATTCTCGGGTGCCAAGG - out.fastq
+  641  zcat Rivaanti155_L005_R1.fastq.gz | cutadapt -a TGGAATTCTCGGGTGCCAAGG > out.fastq
+  642  cutadapt
+  643  zcat Rivaanti155_L005_R1.fastq.gz | cutadapt -a TGGAATTCTCGGGTGCCAAGG -o out.fastq
+  644  cutadapt -a TGGAATTCTCGGGTGCCAAGG -o out.fastq Rivaanti155_L005_R1.fastq.gz
+  645  ls
+  646  bowtie hg19 --threads 4 -v 2 -m 10 -3 TGGAATTCTCGGGTGCCAAGG --best --strata - -S out.sam^C
+  647  bowtie hg19 --threads 4 -v 2 -m 10 --best --strata out.fastq -S out.sam
+  648  bowtie hg19 --threads 4 -v 2 -m 10 --quiet --best --strata out.fastq -S out_fastq.sam
+  649  cutadapt -a TGGAATTCTCGGGTGCCAAGG -m 15 -o out.fastq Rivaanti155_L005_R1.fastq.gz
+  650  bowtie hg19 --threads 4 -v 2 -m 10 --best --strata out.fastq -S out_fastq.sam
+  651  gksudo rstudio
+  652  history
+
+'''
+
+'''
+
+  639  zcat out.fastq
+  640  ls
+  641  wget ftp://ftp.ccb.jhu.edu/pub/data/bowtie_indexes/hg19.ebwt.zip
+  642  +
+  643  6*93
+[  644  ls
+  645  unzip hg19.ebwt.zip
+  646  ls
+  647  cat make_hg19.sh
+  648  ls
+  649  ls /
+  650  ls /scratch/
+  651  mv hg19.ebwt.zip /scratch/hg19.ebwt.zip
+  652  sudo mv hg19.ebwt.zip /scratch/hg19.ebwt.zip
+  653  cd /scratch/
+  654  ls
+  655  sudo chown oier Marta/
+  656  ls -la
+  657  cd Marta/
+  658  ls
+  659  mv ../hg19.ebwt.zip ./hg19.ebwt.zip
+  660  sudo mv ../hg19.ebwt.zip ./hg19.ebwt.zip
+  661  ls
+  662  mv /docs/Dropbox\ \(acpyss\)/Solicitar\ archivos/marta_biodon/Marta\ Fernandez-Mercado\ -\ RIVAanti155_L005_R1.fastq.gz ./Rivaanti155_L005_R1.fastq.gz
+  663  ls
+  664  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19.ebwt.zip --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  665  unzip hg19.ebwt.zip
+  666  zcat Rivaanti155_L005_R1.fastq.gz | bowtie . --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  667  bowtie
+  668  zcat Rivaanti155_L005_R1.fastq.gz | bowtie . --threads 4 -v 2 -m 10 --best --strata -S out.sam
+  669  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19.1.ebwt --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  670  ls
+  671  sh make_hg19.sh
+  672  ls
+  673  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19.1.ebwt --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  674  zcat Rivaanti155_L005_R1.fastq.gz | bowtie . --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  675  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19.1.ebwt --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  676  zcat Rivaanti155_L005_R1.fastq.gz | bowtie /scartch/Marta/ --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  677  zcat Rivaanti155_L005_R1.fastq.gz | bowtie nh19 --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  678  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19 --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  679  ls
+  680  sudo rm -rf /scratch/Win7/
+  681  ls
+  682  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19 --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  683  ls
+  684  pwd
+  685  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19 --threads 4 -v 2 -m 10 --best --strata -S out.sam
+  686  ls
+  687  rm out.sam
+  688  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19 --threads 4 -v 2 -m 10 --best --strata -S out.sam
+  689  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19 --threads 4 -v 2 -m 10 --best --strata - -S out.sam
+  690  samtools -bS out.sam > out.bam
+  691  samtools view -bS out.sam > out.bam
+  692  sudo apt install r-bioc-bsgenome
+  693  sudo rstudio &
+  694  gksudo rstudio
+  695  ls
+  696  samtools view -bS out.sam > out2.bam
+  697  ls
+  698  samtools view -bS out.sam
+  699  samtools view out.sam > out2.bam
+  700  samtools view
+  701  samtools view -b out.sam > out2.bam
+  702  samtools view -bS out.sam > out2.bam
+  703  ls
+  704  samtools view -bS out_fastq.sam > out_fastq.bam
+  705  history
+
+'''
+
+'''
+
+  640  git clone git@github.com:oiertwo/goliath.git
+  641  ls
+  642  cd goliath/
+  643  kls
+  644  ls
+  645  mkdir r-proto
+  646  mkdir py-proto
+  647  cd r-proto/
+  648  touch R-PROTO.md
+  649  nano R-PROTO.md
+  650  cd ..
+  651  nano py-proto/PY-PROTO.md
+  652  ls
+  653  cd r-proto/
+  654  ls
+  655  cd goliath/
+  656  ls
+  657  sudo apt install samtools
+  658  samtools
+  659  samtools merge
+  660  sudo apt install bowtie
+  661  cd ..
+  662  ls
+  663  cd ..
+  664  ls
+  665  nano README.md
+  666  ls
+  667  git add r-proto/*
+  668  git add py-proto/*
+  669  git commit -a
+  670  git push
+  671  cd /scratch/Marta/
+  672  history
+  673  ls
+  674  zcat Rivaanti155_L005_R1.fastq.gz | bowtie --threads 4 -v 2 -m 10 -best --strata - -S out.sam
+  675  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19 --threads 4 -v 2 -m 10 -best --strata - -S out.sam
+  676  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19.1.ebwt --threads 4 -v 2 -m 10 -best --strata - -S out.sam
+  677  ls
+  678  ls -la
+  679  ls
+  680  wc -l Rivaanti155_L005_R1.fastq.gz
+  681  zcat Rivaanti155_L005_R1.fastq.gz | wc -l
+  682  zcat Rivaanti155_L005_R1.fastq.gz | head
+  683  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19.1.ebwt --threads 4 -v 2 -m 10 -3 TGGAATTCTCGGGTGCCAAGG - -S out.sam
+  684  ls
+  685  zcat Rivaanti155_L005_R1.fastq.gz | bowtie hg19 --threads 4 -v 2 -m 10 -3 TGGAATTCTCGGGTGCCAAGG --best --strata - -S out.sam
+  686  ls
+  687  history
+
+'''
+
