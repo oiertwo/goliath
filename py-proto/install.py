@@ -3,16 +3,28 @@
 HG19_LOCATION = '~/hg19/'
 
 from subprocess import call
-
 comands = [
     'sudo apt-get install r-bioc-biomart -y',
     'sudo apt-get install r-bioc-bsgenome -y',
-    'pip3 install -r requirements.txt',
+    'sudo apt-get install python3-pip',
     'sudo apt-get install bowtie -y',
 ]
 
 for c in comands:
     call(c.split(' '))
+
+#PIP INSTALL (IN THE RUNNING ENV)
+import pip
+py_libs = [
+    'rpy2',
+    'cutadapt',
+]
+
+for p in py_libs:
+    if pip.main(['install', p]):
+        print("{} SUCCESFULY INSTALLED".format(p))
+    else:
+        return
 
 r_commands = [
     'source("https://bioconductor.org/biocLite.R")',
@@ -37,3 +49,6 @@ cmd = [
     'unzip hg19.ebwt.zip',
     'sh make_hg19.sh',
 ]
+
+#for c in cmd:
+#    call(c.split(' '))
