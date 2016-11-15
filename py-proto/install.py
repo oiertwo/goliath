@@ -6,7 +6,7 @@ from subprocess import call
 comands = [
     'sudo apt-get install r-bioc-biomart -y',
     'sudo apt-get install r-bioc-bsgenome -y',
-    'sudo apt-get install python3-pip',
+    'sudo apt-get install python3-pip -y',
     'sudo apt-get install bowtie -y',
 ]
 
@@ -23,8 +23,6 @@ py_libs = [
 for p in py_libs:
     if pip.main(['install', p]):
         print("{} SUCCESFULY INSTALLED".format(p))
-    else:
-        return
 
 r_commands = [
     'source("https://bioconductor.org/biocLite.R")',
@@ -43,12 +41,23 @@ for r in r_commands:
 
 #hg19 for bowtie
 
-cmd = [
-    'cd {}'.format(HG19_LOCATION),
-    'wget ftp://ftp.ccb.jhu.edu/pub/data/bowtie_indexes/hg19.ebwt.zip',
-    'unzip hg19.ebwt.zip',
-    'sh make_hg19.sh',
-]
+download = False
 
-#for c in cmd:
-#    call(c.split(' '))
+if download:
+    cmd = [
+        'cd {}'.format(HG19_LOCATION),
+        'wget ftp://ftp.ccb.jhu.edu/pub/data/bowtie_indexes/hg19.ebwt.zip',
+        'unzip hg19.ebwt.zip',
+        'sh make_hg19.sh',
+    ]
+
+else:
+    cmd = [
+        'mv ../hg19.ebwt.zip {}/hg19.ebwt.zip'.format(),
+        'cd {}'.format(HG19_LOCATION),
+        'unzip hg19.ebwt.zip',
+        'sh make_hg19.sh',
+        ]
+
+for c in cmd:
+    call(c.split(' '))
