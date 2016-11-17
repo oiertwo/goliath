@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 import os
+import datetime
 
 ### CONFIG
 
 #general settings
-DEST = 'output'
+RANDOM = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M")
+DEST = "/home/user/output-{}".format(RANDOM)
 MERGE_OUT = os.path.join(DEST,"merge_out.fastq")
-
+BAM_FILE = os.path.join(DEST,"out.bam")
 #bowtie settings
 BOWTIE_HG19 = '~/hg19'
 BOWTIE_OUT = os.path.join(DEST, 'bow_out.sam')
@@ -51,7 +53,6 @@ def main():
         argc = len(sys.argv[:])
         print("merging... please wait, this is a good time for a coffee or a tea...")
 
-
         if argc == 3:
             tools.merge2(sys.argv[1],sys.argv[2],MERGE_OUT)
         elif argc == 4:
@@ -79,17 +80,31 @@ def main():
                                                                                  CA_OUT, BOWTIE_OUT)
         call(cmd.split(' '))
 
+        ## 	#ALIGN:
+        ## 		sample.fastq -> sample.sam
+        ## 	#CONVERT:
+        ## 		samtools view -b -S sample.sam -o sample.bam
+        ## 	#SORT:
+        ## 		samtools sort sample.bam sample_sorted
+        ## 	#INDEXING:
+        ## 		samtools index sample_sorted.bam
 
+
+        cmd = "samtools view -b -S {} -o {}".format(BOWTIE_OUT, BAM_FILE)
+        call(cmd.split(" "))
+
+        tools.call_to_R(BAM_FILE, output=DEST)
 
     except:
         print("ERROR:", sys.exc_info())
 
         print("HELP:")
-        print("arguments missing")
+        print("arguments missing????")
         print("structure: ")
         print("biomerge [file1] [file2] ... [fileN] [mergedfile]")
         print("(hint) all file extension should be *.fastq")
+        print("(hint 2) Maximum: 3 files")
 
 
 if __name__ == '__main__':
-main()
+    main()
