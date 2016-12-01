@@ -28,6 +28,7 @@ r_commands = [
     'source("https://bioconductor.org/biocLite.R")',
     'library(BiocInstaller)',
     'biocLite("wavClusteR")',
+    'install.packages("foreach")'
     'install.packages("doParallel")',
     'biocLite("BSgenome.Hsapiens.UCSC.hg19")',
     'biocLite("XML")',

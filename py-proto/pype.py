@@ -6,11 +6,12 @@ import datetime
 
 #general settings
 RANDOM = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M")
-DEST = "/home/user/output-{}".format(RANDOM)
+RANDOM = ""
+DEST = "/scratch/Marta/output-{}".format(RANDOM)
 MERGE_OUT = os.path.join(DEST,"merge_out.fastq")
 BAM_FILE = os.path.join(DEST,"out.bam")
 #bowtie settings
-BOWTIE_HG19 = '~/hg19'
+BOWTIE_HG19 = '/scratch/Marta'
 BOWTIE_OUT = os.path.join(DEST, 'bow_out.sam')
 
 #cutadapt settings
@@ -47,8 +48,12 @@ def main():
     #    print('Error parsing arguments.')
     #    parser.error(str(exc.message))
     #    exit(-1)
-
+    if not os.path.exists(DEST):
+        os.makedirs(DEST)
     try:
+
+        f = open("test1.out", "w")
+        sys.stdout = f
 
         argc = len(sys.argv[:])
         print("merging... please wait, this is a good time for a coffee or a tea...")
@@ -58,6 +63,7 @@ def main():
         elif argc == 4:
             tools.merge3(sys.argv[1],sys.argv[2],sys.argv[3],MERGE_OUT)
         elif argc == 2:
+            MERGE_OUT = sys.argv[1]
             print("No need to merge, only one file...")
         else:
             print("HELP:")
@@ -68,17 +74,29 @@ def main():
             print("(hint 2) Maximum: 3 files")
             return
 
+        f.close()
+
+        f = open("test2.out", "w")
+        sys.stdout = f
 
         print("NEW PROCESS: Cutadapt")
 
         cmd = "cutadapt -a {} -m {} -o {} {}".format(CA_3ADAPT,CA_LENGTH,CA_OUT,MERGE_OUT)
+        print("CALL: " + cmd)
         call(cmd.split(' '))
+
+        f.close()
 
         print("NEW PROCESS: Aligning... time to go for lunch")
 
+        f = open("test3.out", "w")
+        sys.stdout = f
+
         cmd = 'bowtie {} --threads 4 -v 2 -m 10 --best --strata {} -S {}'.format(os.path.join(BOWTIE_HG19,'hg19'),
-                                                                                 CA_OUT, BOWTIE_OUT)
+                                                                             CA_OUT, BOWTIE_OUT)
+        print("CALL: " + cmd)
         call(cmd.split(' '))
+        f.close()
 
         ## 	#ALIGN:
         ## 		sample.fastq -> sample.sam
@@ -89,11 +107,14 @@ def main():
         ## 	#INDEXING:
         ## 		samtools index sample_sorted.bam
 
-
+        f = open("test4.out", "w")
+        sys.stdout = f
         cmd = "samtools view -b -S {} -o {}".format(BOWTIE_OUT, BAM_FILE)
-        call(cmd.split(" "))
+        print("CALL: " + cmd)
+        #call(cmd.split(" "))
+        f.close()
 
-        tools.call_to_R(BAM_FILE, output=DEST)
+        #tools.call_to_R(BAM_FILE, output=DEST)
 
     except:
         print("ERROR:", sys.exc_info())
