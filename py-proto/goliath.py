@@ -6,18 +6,19 @@ import datetime
 
 #general settings
 RANDOM = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M")
-RANDOM = ""
-DEST = "/scratch/Marta/output-{}".format(RANDOM)
+#RANDOM = ""
+DEST = "/home/ibai/output-{}".format(RANDOM)
 MERGE_OUT = os.path.join(DEST,"merge_out.fastq")
 BAM_FILE = os.path.join(DEST,"out.bam")
 #bowtie settings
-BOWTIE_HG19 = '/scratch/Marta'
+BOWTIE_HG19 = '/home/ibai/hg19' #please write full path
 BOWTIE_OUT = os.path.join(DEST, 'bow_out.sam')
 
 #cutadapt settings
 CA_3ADAPT = "TGGAATTCTCGGGTGCCAAGG"
 CA_LENGTH = 15
 CA_OUT = os.path.join(DEST,"ca_out.fastq")
+CA_PRINT_FILE = os.path.join(DEST, "trim_stats.txt")
 
 #########
 
@@ -52,9 +53,6 @@ def main():
         os.makedirs(DEST)
     try:
 
-        f = open("test1.out", "w")
-        sys.stdout = f
-
         argc = len(sys.argv[:])
         print("merging... please wait, this is a good time for a coffee or a tea...")
 
@@ -74,10 +72,6 @@ def main():
             print("(hint 2) Maximum: 3 files")
             return
 
-        f.close()
-
-        f = open("test2.out", "w")
-        sys.stdout = f
 
         print("NEW PROCESS: Cutadapt")
 
@@ -85,18 +79,17 @@ def main():
         print("CALL: " + cmd)
         call(cmd.split(' '))
 
-        f.close()
-
         print("NEW PROCESS: Aligning... time to go for lunch")
 
-        f = open("test3.out", "w")
-        sys.stdout = f
 
         cmd = 'bowtie {} --threads 4 -v 2 -m 10 --best --strata {} -S {}'.format(os.path.join(BOWTIE_HG19,'hg19'),
                                                                              CA_OUT, BOWTIE_OUT)
         print("CALL: " + cmd)
-        call(cmd.split(' '))
-        f.close()
+        a = []
+        for i in cmd.split(' '):
+            if i:
+                a.append(i)
+        call(a)
 
         ## 	#ALIGN:
         ## 		sample.fastq -> sample.sam
@@ -106,15 +99,14 @@ def main():
         ## 		samtools sort sample.bam sample_sorted
         ## 	#INDEXING:
         ## 		samtools index sample_sorted.bam
+        ## #-F 4:
+        ##     leaves the unmaped out
 
-        f = open("test4.out", "w")
-        sys.stdout = f
-        cmd = "samtools view -b -S {} -o {}".format(BOWTIE_OUT, BAM_FILE)
+        cmd = "samtools view -F 4 -b -S {} -o {}".format(BOWTIE_OUT, BAM_FILE)
         print("CALL: " + cmd)
-        #call(cmd.split(" "))
-        f.close()
+        call(cmd.split(" "))
 
-        #tools.call_to_R(BAM_FILE, output=DEST)
+        tools.call_to_R(BAM_FILE, output=DEST)
 
     except:
         print("ERROR:", sys.exc_info())
