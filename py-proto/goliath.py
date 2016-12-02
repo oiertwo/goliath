@@ -6,7 +6,7 @@ import datetime
 
 #general settings
 RANDOM = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M")
-#RANDOM = ""
+RANDOM = ""
 DEST = "/home/ibai/output-{}".format(RANDOM)
 MERGE_OUT = os.path.join(DEST,"merge_out.fastq")
 BAM_FILE = os.path.join(DEST,"out.bam")
@@ -104,7 +104,7 @@ def main():
         ## #-F 4:
         ##     leaves the unmaped out
 
-        cmd = "samtools view -F 4 -b -S {} -o {}".format(BOWTIE_OUT, BAM_FILE)
+        cmd = "samtools view -b -S {} -o {}".format(BOWTIE_OUT, BAM_FILE)
         print("CALL: " + cmd)
         call(cmd.split(" "))
 
