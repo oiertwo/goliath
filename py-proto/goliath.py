@@ -57,11 +57,13 @@ def main():
         print("merging... please wait, this is a good time for a coffee or a tea...")
 
         if argc == 3:
+            print("Merging 2 files...")
             tools.merge2(sys.argv[1],sys.argv[2],MERGE_OUT)
         elif argc == 4:
+            print("Merging 3 files...")
             tools.merge3(sys.argv[1],sys.argv[2],sys.argv[3],MERGE_OUT)
         elif argc == 2:
-            MERGE_OUT = sys.argv[1]
+            globals()['MERGE_OUT'] =  sys.argv[1]
             print("No need to merge, only one file...")
         else:
             print("HELP:")

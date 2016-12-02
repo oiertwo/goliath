@@ -11,11 +11,10 @@ def merge2(f1, f2, f_out, compress=True):
     outfile = open(f_out, "w")
     iter1 = SeqIO.parse(open(f1), "fastq")
     iter2 = SeqIO.parse(open(f2), "fastq")
-
     for t in zip_longest(iter1, iter2):
         add = []
         for rec in t:
-            if (rec != None):
+            if rec:
                 add.append(rec)
         SeqIO.write(add, outfile, "fastq")
     outfile.close()
@@ -37,7 +36,7 @@ def merge3(f1, f2, f3, f_out, compress=True):
     for t in zip_longest(iter1, iter2, iter3):
         add = []
         for rec in t:
-            if (rec != None):
+            if rec:
                 add.append(rec)
         SeqIO.write(add, outfile, "fastq")
     outfile.close()
